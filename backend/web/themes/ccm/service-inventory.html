@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html class="ccm-dashboard">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>:: CCM ::</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap/datetimepicker/bootstrap-datetimepicker.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="css/custom-skin.css">
+  <link rel="stylesheet" href="css/cui-basic.min.css">
+  <link rel="stylesheet" href="font-awesome/css/font-awesome.css">
+
+  
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body class="dashboard-body">
+<main>
+  <header class="header navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="">
+        <div class="col-lg-6">
+          <div class="logo-info">
+            <div class="logo"><img src="img/logo.png" /><span class="pro-name">CCM - Configuration & Compliance Manager</span></div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          
+          <div class="user-setting-div pull-right">
+          <ul class="nav navbar-top-links">
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle user-details" data-toggle="dropdown" href="#" aria-expanded="true">
+                      <i class="fa fa-user fa-fw"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        </li>
+                        <li><a href="login.html" class="logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+        </div>
+        </div>
+
+        <div class="col-lg-12">
+          <div>
+            <nav class="navbar">
+              <div class="row">
+                <div class="content-fluid">
+                  <div class="navbar-header">
+                    <button class="navbar-toggle collapsed" aria-expanded="false" aria-controls="navbar" type="button" data-toggle="collapse" data-target="#navbar">
+                      <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                    </button>
+                  </div>
+                  <div class="navbar-collapse collapse" id="navbar">
+                    <ul class="nav navbar-nav">
+                      <li><a href="#">Dashboard</a></li>
+                      <li class="active"><a href="#">Services</a></li>
+                      <li><a href="#">Configuration</a></li>
+                      <li><a href="#">Compliance</a></li>
+                    </ul>
+                  </div><!--/.nav-collapse --> 
+                </div>
+              </div>
+              
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  
+  <article class="body-wrapper">
+    <section class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="container-panel">
+            <div class="panel-title clearfix">
+              <div class="row">
+                <div class="col-lg-6"><h5 class="p-title">All Services</h5></div>
+                <div class="col-lg-6">
+                  <div class="pull-right">
+                    <form>
+                      <label class="switch-icon">
+                        <input type="checkbox" name="switchicon1">
+                        <span class="switch__input">
+                        <span class="icon-grid-view"></span>
+                        <span class="icon-list-view"></span>
+                      </span>
+                      </label>
+                    </form>
+                  </div>
+                  <div class="pull-right" style="margin-right: 15px;">
+                    <select class="form-control">
+                      <option selected="true">Other Action</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                      <button class="btn btn-add" data-toggle="tooltip" data-placement="top" title="Add Service">
+                          <span class="icon-plus"></span>
+                      </button>
+                      <button class="btn btn-delete" data-toggle="tooltip" data-placement="top" title="Delete Service">
+                          <span class="icon-trash"></span>
+                      </button>
+                </div>
+                
+              </div>
+
+            <!-- <div class="btn-div clearfix">
+              <button type="button" class="btn btn-swim" data-toggle="modal" data-target="#scheduleapproval">Create Batch</button>
+            </di -->
+
+            <div class="tabe-grid-view">
+              <table cellspacing="0" class="table-style tableBodyScroll">
+                <thead>
+                  <tr>
+                    <th colspan="2"><span>Service ID</span></th>
+                    <th><span>Service Name</span></th>
+                    <th><span>Role</span></th>
+                    <th><span>Template Version</span></th>
+                    <th><span>Field</span></th>
+                    <th><span>Status</span></th>
+                    <th><span>Action</span></th>
+                  </tr>
+                  <tr>
+                    <th colspan="2"><input id="" type="text" class="form-control table-filter" placeholder="Search"></th>
+                    <th><input id="" type="text" class="form-control table-filter" placeholder="Search"></th>
+                    <th><input id="" type="text" class="form-control table-filter" placeholder="Search"></th>
+                    <th><input id="" type="text" class="form-control table-filter" placeholder="Search"></th>
+                    <th><input id="" type="text" class="form-control table-filter" placeholder="Search"></th>
+                    <th><input id="" type="text" class="form-control table-filter" placeholder="Search"></th>
+                    <th><input id="" type="text" class="form-control table-filter" placeholder="Search"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="width: 25px;"><input type="checkbox" name="checkbox2"></td>
+                    <td>Device 1</td>
+                    <td>AGRALHMDPAR001</td>
+                    <td>172.16.50.1</td>
+                    <td>2405:200:201:1200:172:16:50:1</td>
+                    <td>A</td>
+                    <td>0</td>
+                    <td ><a data-toggle="modal" data-target="#scheduleapproval">Deploy</a></td>
+                  </tr>
+                  <tr>
+                    <td style="width: 25px;"><input type="checkbox" name="checkbox2"></td>
+                    <td>Device 2</td>
+                    <td>AGRALHMDPAR002</td>
+                    <td>172.16.50.2</td>
+                    <td>2405:200:201:1200:172:16:50:2</td>
+                    <td>A</td>
+                    <td>0</td>
+                    <td><a data-toggle="modal" data-target="#scheduleapproval">Deploy</a></td>
+                  </tr>
+                  <tr>
+                    <td style="width: 25px;"><input type="checkbox" name="checkbox2"></td>
+                    <td>Device 3</td>
+                    <td>MHWAMHWAPAR002</td>
+                    <td>172.16.50.3</td>
+                    <td>2405:200:201:1200:172:16:50:3</td>
+                    <td>A</td>
+                    <td>2</td>
+                    <td><a data-toggle="modal" data-target="#scheduleapproval">Deploy</a></td>
+                  </tr>
+                  <tr>
+                    <td style="width: 25px;"><input type="checkbox" name="checkbox2"></td>
+                    <td>Device 4</td>
+                    <td>HLNAHLNAPAR001</td>
+                    <td>172.16.50.4</td>
+                    <td>2405:200:201:1200:172:16:50:4</td>
+                    <td>A</td>
+                    <td>0</td>
+                    <td><a data-toggle="modal" data-target="#scheduleapproval">Deploy</a></td>
+                  </tr>
+                  <tr>
+                    <td style="width: 25px;"><input type="checkbox" name="checkbox2"></td>
+                    <td>Device 5</td>
+                    <td>BRPRRJDRPAR001</td>
+                    <td>172.16.50.5</td>
+                    <td>2405:200:201:1200:172:16:50:5</td>
+                    <td>A</td>
+                    <td>1</td>
+                    <td><a data-toggle="modal" data-target="#scheduleapproval">Validate</a></td>
+                  </tr>
+                  <tr>
+                    <td style="width: 25px;"><input type="checkbox" name="checkbox2"></td>
+                    <td>Device 6</td>
+                    <td>BRPRRJDRPAR002</td>
+                    <td>172.16.50.6</td>
+                    <td>2405:200:201:1200:172:16:50:6</td>
+                    <td>A</td>
+                    <td>1</td>
+                    <td><a data-toggle="modal" data-target="#scheduleapproval">Validate</a></td>
+                  </tr>
+                  <tr>
+                    <td style="width: 25px;"><input type="checkbox" name="checkbox2"></td>
+                    <td>Device 7</td>
+                    <td>KROLKROLPAR001</td>
+                    <td>172.16.50.7</td>
+                    <td>2405:200:201:1200:172:16:50:7</td>
+                    <td>A</td>
+                    <td>0</td>
+                    <td><a data-toggle="modal" data-target="#scheduleapproval">Validate</a></td>
+                  </tr>
+                  <tr>
+                    <td style="width: 25px;"><input type="checkbox" name="checkbox2"></td>
+                    <td>Device 8</td>
+                    <td>MTHRDRMLPAR001</td>
+                    <td>172.16.50.8</td>
+                    <td>2405:200:201:1200:172:16:50:8</td>
+                    <td>A</td>
+                    <td>0</td>
+                    <td><a data-toggle="modal" data-target="#scheduleapproval">Deploy</a></td>
+                  </tr>
+                  <tr>
+                    <td style="width: 25px;"><input type="checkbox" name="checkbox2"></td>
+                    <td>Device 9</td>
+                    <td>KSKNKSKNPAR001</td>
+                    <td>172.16.50.9</td>
+                    <td>2405:200:201:1200:172:16:50:9</td>
+                    <td>A</td>
+                    <td>0</td>
+                    <td><a data-toggle="modal" data-target="#scheduleapproval">Deploy</a></td>
+                  </tr>
+                  <tr>
+                    <td style="width: 25px;"><input type="checkbox" name="checkbox2"></td>
+                    <td>Device 10</td>
+                    <td>KSKNKSKNPAR002</td>
+                    <td>172.16.50.10</td>
+                    <td>2405:200:201:1200:172:16:50:10</td>
+                    <td>A</td>
+                    <td>0</td>
+                    <td><a data-toggle="modal" data-target="#scheduleapproval">Deploy<a/></td>
+                  </tr>
+                  <tr>
+                    <td style="width: 25px;"><input type="checkbox" name="checkbox2"></td>
+                    <td>Device 11</td>
+                    <td>MTHRDRMLPAR001</td>
+                    <td>172.16.50.8</td>
+                    <td>2405:200:201:1200:172:16:50:8</td>
+                    <td>A</td>
+                    <td>0</td>
+                    <td><a data-toggle="modal" data-target="#scheduleapproval">Deploy</a></td>
+                  </tr>
+                  <tr>
+                    <td style="width: 25px;"><input type="checkbox" name="checkbox2"></td>
+                    <td>Device 12</td>
+                    <td>KSKNKSKNPAR001</td>
+                    <td>172.16.50.9</td>
+                    <td>2405:200:201:1200:172:16:50:9</td>
+                    <td>A</td>
+                    <td>0</td>
+                    <td><a data-toggle="modal" data-target="#scheduleapproval">Validate</a></td>
+                  </tr>
+                  <tr>
+                    <td style="width: 25px;"><input type="checkbox" name="checkbox2"></td>
+                    <td>Device 13</td>
+                    <td>MTHRDRMLPAR001</td>
+                    <td>172.16.50.8</td>
+                    <td>2405:200:201:1200:172:16:50:8</td>
+                    <td>A</td>
+                    <td>0</td>
+                    <td><a data-toggle="modal" data-target="#scheduleapproval">Validate</a></td>
+                  </tr>
+                  <tr>
+                    <td style="width: 25px;"><input type="checkbox" name="checkbox2"></td>
+                    <td>Device 14</td>
+                    <td>KSKNKSKNPAR001</td>
+                    <td>172.16.50.9</td>
+                    <td>2405:200:201:1200:172:16:50:9</td>
+                    <td>A</td>
+                    <td>0</td>
+                    <td><a data-toggle="modal" data-target="#scheduleapproval">Deploy</a></td>
+                  </tr>
+                  <tr>
+                    <td style="width: 25px;"><input type="checkbox" name="checkbox2"></td>
+                    <td>Device 15</td>
+                    <td>MTHRDRMLPAR001</td>
+                    <td>172.16.50.8</td>
+                    <td>2405:200:201:1200:172:16:50:8</td>
+                    <td>A</td>
+                    <td>0</td>
+                    <td><a data-toggle="modal" data-target="#scheduleapproval">Deploy</a></td>
+                  </tr>
+                  <tr>
+                    <td style="width: 25px;"><input type="checkbox" name="checkbox2"></td>
+                    <td>Device 16</td>
+                    <td>KSKNKSKNPAR001</td>
+                    <td>172.16.50.9</td>
+                    <td>2405:200:201:1200:172:16:50:9</td>
+                    <td>A</td>
+                    <td>0</td>
+                    <td><a data-toggle="modal" data-target="#scheduleapproval">Deploy</a></td>
+                  </tr>
+                  <tr>
+                    <td style="width: 25px;"><input type="checkbox" name="checkbox2"></td>
+                    <td>Device 17</td>
+                    <td>MTHRDRMLPAR001</td>
+                    <td>172.16.50.8</td>
+                    <td>2405:200:201:1200:172:16:50:8</td>
+                    <td>A</td>
+                    <td>0</td>
+                    <td><a data-toggle="modal" data-target="#scheduleapproval">Deploy</a></td>
+                  </tr>
+                  <tr>
+                    <td style="width: 25px;"><input type="checkbox" name="checkbox2"></td>
+                    <td>Device 18</td>
+                    <td>KSKNKSKNPAR001</td>
+                    <td>172.16.50.9</td>
+                    <td>2405:200:201:1200:172:16:50:9</td>
+                    <td>A</td>
+                    <td>0</td>
+                    <td style="cursor:pointer"><a data-toggle="modal" data-target="#scheduleapproval">Deploy</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+  </article>
+
+  <!-- Schedule Approval Popup -->
+  <!-- Modal -->
+  <div class="modal fade" id="scheduleapproval" tabindex="-1" role="dialog" aria-labelledby="scheduleapproval">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content seim-popup">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="scheduleapproval">Modal title</h4>
+        </div>
+        <div class="modal-body">
+          <div class="batch-info">
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="clearfix batch-steps no-border">
+                  <div class="pull-left">
+                    <div><img src="img/batch-icon1.png"></div>
+                  </div>
+                  <div class="pull-left step-text">
+                    <span class="step-icon">Batches Created</span>
+                    <span class="devices-number">2087</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="popup-wheat-bg">
+            <div>
+              <p class="activity-date">Select Date of Upgrade Activity</p>
+              <div class="form-group">
+              <div class="select-date">
+              <div class="input-group date form_datetime" >
+                  <input class="form-control calendar-tb" size="16" type="text" value="" readonly>
+                  <span class="input-group-addon calendar-icon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+              </div>
+              <input type="hidden" id="dtp_input1" value="" />
+              </div>
+              </div>
+              <div class="form-group">
+                <select class="form-control level">
+                  <option selected="true">Multi Level / Single Level Selection</option>
+                  <option selected="">Multi Level</option>
+                  <option selected="">MSingle Level</option>
+                </select>
+              </div>
+              <div class="form-group level">
+                <input id="" type="text" class="form-control" placeholder="Search">
+              </div>
+              <div class="form-group">
+                <p class="activity-date">Select an Number of Approvals Required</p>
+                <div class="checkbox popup-checkbox">
+                  <label><input type="checkbox" style="margin-top: 0px;"> All</label>
+                  <label><input type="checkbox" style="margin-top: 0px;"> Any One</label>
+                  <label><input type="checkbox" style="margin-top: 0px;"> Any Two</label>
+                </div>
+              </div>
+              <hr />
+              
+              <p class="activity-date">Schedule Pre-check</p>
+              <div class="form-group">
+              <div class="select-date">
+              <div class="input-group date form_datetime" >
+                  <input class="form-control calendar-tb" size="16" type="text" value="" readonly>
+                  <span class="input-group-addon calendar-icon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+              </div>
+              <input type="hidden" id="dtp_input1" value="" />
+              </div>
+              </div>
+              <p class="activity-date">All the Qualified devices will be send for Approval.</p>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-swim-cancel" data-dismiss="modal">Cancle</button>
+          <button type="button" class="btn btn-swim">Send for Approval</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Schedule Approval Popup End -->
+
+</main>
+<!-- jQuery 2.2.3 -->
+<script src="bootstrap/js/jquery.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Date Time Picker -->
+<script src="bootstrap/datetimepicker/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript">
+    $('.form_datetime').datetimepicker({
+        //language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+    autoclose: 1,
+    todayHighlight: 1,
+    startView: 2,
+    forceParse: 0,
+        showMeridian: 1
+    });
+  $('.form_date').datetimepicker({
+        language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+    autoclose: 1,
+    todayHighlight: 1,
+    startView: 2,
+    minView: 2,
+    forceParse: 0
+    });
+  $('.form_time').datetimepicker({
+        language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+    autoclose: 1,
+    todayHighlight: 1,
+    startView: 1,
+    minView: 0,
+    maxView: 1,
+    forceParse: 0
+    });
+</script>
+<!-- Date Time Picker -->
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('.record_table tr').click(function (event) {
+        if (event.target.type !== 'checkbox') {
+            $(':checkbox', this).trigger('click');
+        }
+    });
+
+    $("input[type='checkbox']").change(function (e) {
+        if ($(this).is(":checked")) {
+            $(this).closest('tr').addClass("highlight_row");
+        } else {
+            $(this).closest('tr').removeClass("highlight_row");
+        }
+    });
+});
+</script>
+
+<!-- Multiple Select Drop Down -->
+<script type="text/javascript" src="bootstrap/js/bootstrap-multiselect.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.selectmultiple').multiselect({
+            enableFiltering: true,
+            includeSelectAllOption: true,
+            selectAllJustVisible: false
+        });
+    });
+</script>
+<!-- Multiple Select Drop Down -->
+
+</body>
+</html>

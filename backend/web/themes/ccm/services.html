@@ -1,0 +1,393 @@
+			<!DOCTYPE html>
+			<html class="ccm-dashboard">
+			<head>
+			  <meta charset="utf-8">
+			  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+			  <title>:: CCM ::</title>
+			  <!-- Tell the browser to be responsive to screen width -->
+			  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+			  <!-- Bootstrap 3.3.6 -->
+			  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+			  <link rel="stylesheet" href="bootstrap/datetimepicker/bootstrap-datetimepicker.css">
+			  <!-- Theme style -->
+			  <link rel="stylesheet" href="css/custom-skin.css">
+			  <link rel="stylesheet" href="css/cui-basic.min.css">
+			  <link rel="stylesheet" href="font-awesome/css/font-awesome.css">
+
+			  
+			  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+			  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+			  <!--[if lt IE 9]>
+			  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+			  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+			  <![endif]-->
+			</head>
+			<body class="dashboard-body">
+			<main>
+			  <header class="header navbar-fixed-top">
+			    <div class="container-fluid">
+			      <div class="">
+			        <div class="col-lg-6">
+			          <div class="logo-info">
+			            <div class="logo"><img src="img/logo.png" /><span class="pro-name">CCM - Configuration & Compliance Manager</span></div>
+			          </div>
+			        </div>
+			        <div class="col-lg-6">
+			          
+			          <div class="user-setting-div pull-right">
+			          <ul class="nav navbar-top-links">
+			                <!-- /.dropdown -->
+			                <li class="dropdown">
+			                    <a class="dropdown-toggle user-details" data-toggle="dropdown" href="#" aria-expanded="true">
+			                      <i class="fa fa-user fa-fw"></i>
+			                    </a>
+			                    <ul class="dropdown-menu dropdown-user">
+			                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+			                        </li>
+			                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+			                        </li>
+			                        <li><a href="login.html" class="logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+			                        </li>
+			                    </ul>
+			                    <!-- /.dropdown-user -->
+			                </li>
+			                <!-- /.dropdown -->
+			            </ul>
+			        </div>
+			        </div>
+
+			        <div class="col-lg-12">
+			          <div>
+			            <nav class="navbar">
+			              <div class="row">
+			                <div class="content-fluid">
+			                  <div class="navbar-header">
+			                    <button class="navbar-toggle collapsed" aria-expanded="false" aria-controls="navbar" type="button" data-toggle="collapse" data-target="#navbar">
+			                      <span class="sr-only">Toggle navigation</span>
+			                      <span class="icon-bar"></span>
+			                      <span class="icon-bar"></span>
+			                      <span class="icon-bar"></span>
+			                    </button>
+			                  </div>
+			                  <br>
+			                  <div class="navbar-collapse collapse" id="navbar">
+			                    <ul class="nav navbar-nav">
+			                      <li><a href="#">Dashboard</a></li>
+			                      <li><a href="#">Customers</a></li>
+			                      <li class="active"><a href="#">Services</a></li>
+			                      <li><a href="#">Devices</a></li>
+			                      <!-- <li><a href="#">Compliance</a></li> -->
+			                    </ul>
+			                  </div><!--/.nav-collapse --> 
+			                </div>
+			              </div>
+			              
+			            </nav>
+			          </div>
+			        </div>
+			      </div>
+			    </div>
+			  </header>
+
+			  <br>
+			  <article class="body-wrapper">
+			    <section class="container-fluid">
+			      <div class="row">
+			        <div class="col-lg-12">
+			          <div class="container-panel">
+			            <div class="panel-title clearfix">
+			              <div class="row">
+			                <div class="col-lg-6"><h5 class="p-title">All Services</h5></div>
+			                <div class="col-lg-6">
+			                  <div class="pull-right">
+			                    <form>
+			                      <label class="switch-icon">
+			                        <input type="checkbox" name="switchicon1">
+			                        <span class="switch__input">
+			                        <span class="icon-grid-view"></span>
+			                        <span class="icon-list-view"></span>
+			                      </span>
+			                      </label>
+			                    </form>
+			                  </div>
+			                  <div class="pull-right" style="margin-right: 15px;">
+			                    <select class="form-control">
+			                      <option selected="true">Other Action</option>
+			                      <option>2</option>
+			                      <option>3</option>
+			                      <option>4</option>
+			                      <option>5</option>
+			                    </select>
+			                  </div>
+			                </div>
+			              </div>
+			            </div>
+			            <div class="row">
+		                <div class="col-lg-6">
+                      <button class="btn btn-add" data-toggle="tooltip" data-placement="top" title="Add Service">
+                          <span class="icon-plus"></span>
+                      </button>
+                      <button class="btn btn-delete" data-toggle="tooltip" data-placement="top" title="Delete Service">
+                          <span class="icon-trash"></span>
+		                  </button>
+		                </div>
+			            </div>
+
+			            <!-- <div class="btn-div clearfix">
+			              <button type="button" class="btn btn-swim" data-toggle="modal" data-target="#scheduleapproval">Create Batch</button>
+			            </div -->
+
+			            <section>
+		<div class="container">
+		  <!-- Example row of columns -->
+		  <div class="dash-wrapper">
+			<!-- <h2 class="title">Explore Our Services</h2> -->
+			<p>&nbsp;</p>
+			<div class="adsh-icon-box">
+				<ul class="nav nav-tabs dashboard-icons" id="myTab" role="tablist">
+					<li class="nav-item col-lg-3 active">
+					  <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-expanded="false">
+						<img src="img/S-01.png" class="" alt="">
+						<h4>L3 VPN Services</h4>
+					  </a>
+					</li>
+					<li class="nav-item col-lg-3">
+					  <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-expanded="true">
+						<img src="img/S-02.png" class="" alt="">
+						<h4>L2 VPN Services</h4>
+					  </a>
+					</li>
+					<li class="nav-item col-lg-3">
+					  <a class="nav-link" id="internet-tab" data-toggle="tab" href="#internet" role="tab" aria-controls="internet" aria-expanded="true">
+						<img src="img/S-03.png" class="" alt="">
+						<h4>Internet Services</h4>
+					  </a>
+					</li>
+				</ul>
+				<div class="tab-content" id="myTabContent">
+					<div role="tabpanel" class="tab-pane fade sub-menu clearfix active in" id="home" aria-labelledby="home-tab" aria-expanded="false" style="font-family: ciscosans;">
+						<div class="">
+							<div class="col-lg-3">
+								<p> Single Customer VLAN from CPE with AG2 Redundancy, no ESS redundancy.</p>
+								<!-- <a href="" class="tabpanel-link">Read More</a> -->
+							</div>
+							<div class="col-lg-3">
+								<p> Single Customer VLAN from CPE with AG2 Redundancy, no ESS redundancy.</p>
+							</div>
+							<div class="col-lg-3">
+								<p>Single Customer VLAN from L2-Demarc, AG2 and ESS Redundancy.</p>
+							</div>
+							<div class="col-lg-3">
+								<p> Single Customer VLAN from L2-Demarc, AG2 and ESS Redundancy.</p>
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane fade sub-menu clearfix" id="profile" role="tabpanel" aria-labelledby="profile-tab" aria-expanded="true" style="font-family: ciscosans;">
+						<div class="">
+							<div class="col-lg-4">
+								<p> Single Customer VLAN from CPE with AG2 Redundancy.</p>
+							</div>
+							<div class="col-lg-4">
+								<p>Single Customer VLAN from L2-Demarc, AG2 Redundancy but no CSS/ESS redundancy.</p>
+							</div>
+							<div class="col-lg-4">
+								<p>Single Customer VLAN from L2-Demarc, AG2 Redundancy but no CSS/ESS redundancy.</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="tab-pane fade sub-menu clearfix" id="internet" role="tabpanel" aria-labelledby="internet-tab" aria-expanded="true" style="font-family: ciscosans;">
+						<div class="">
+							<div class="col-lg-3">
+								<p> Internet Default Route.</p>
+							</div>
+							<div class="col-lg-3">
+								<p>Internet Default Route – Customer behind L2-Demarc. CSS/ESS redundancy.</p>
+							</div>
+							<div class="col-lg-3">
+								<p> Internet Full Routing Table, single vlan, no IBR redundancy.</p>
+							</div>
+							<div class="col-lg-3">
+								<p> Internet Full Routing Table, single vlan, with IBR redundancy.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				</div>
+
+				
+				
+			</div>
+		  </div>
+		</div>
+	</section>
+
+			          </div>
+			        </div>
+			      </div>
+			    </section>
+
+			    
+			  </article>
+
+			  <!-- Schedule Approval Popup -->
+			  <!-- Modal -->
+			  <div class="modal fade" id="scheduleapproval" tabindex="-1" role="dialog" aria-labelledby="scheduleapproval">
+			    <div class="modal-dialog" role="document">
+			      <div class="modal-content seim-popup">
+			        <div class="modal-header">
+			          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			          <h4 class="modal-title" id="scheduleapproval">Modal title</h4>
+			        </div>
+			        <div class="modal-body">
+			          <div class="batch-info">
+			            <div class="row">
+			              <div class="col-lg-6">
+			                <div class="clearfix batch-steps no-border">
+			                  <div class="pull-left">
+			                    <div><img src="img/batch-icon1.png"></div>
+			                  </div>
+			                  <div class="pull-left step-text">
+			                    <span class="step-icon">Batches Created</span>
+			                    <span class="devices-number">2087</span>
+			                  </div>
+			                </div>
+			              </div>
+			            </div>
+			          </div>
+			          <div class="popup-wheat-bg">
+			            <div>
+			              <p class="activity-date">Select Date of Upgrade Activity</p>
+			              <div class="form-group">
+			              <div class="select-date">
+			              <div class="input-group date form_datetime" >
+			                  <input class="form-control calendar-tb" size="16" type="text" value="" readonly>
+			                  <span class="input-group-addon calendar-icon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+			              </div>
+			              <input type="hidden" id="dtp_input1" value="" />
+			              </div>
+			              </div>
+			              <div class="form-group">
+			                <select class="form-control level">
+			                  <option selected="true">Multi Level / Single Level Selection</option>
+			                  <option selected="">Multi Level</option>
+			                  <option selected="">MSingle Level</option>
+			                </select>
+			              </div>
+			              <div class="form-group level">
+			                <input id="" type="text" class="form-control" placeholder="Search">
+			              </div>
+			              <div class="form-group">
+			                <p class="activity-date">Select an Number of Approvals Required</p>
+			                <div class="checkbox popup-checkbox">
+			                  <label><input type="checkbox" style="margin-top: 0px;"> All</label>
+			                  <label><input type="checkbox" style="margin-top: 0px;"> Any One</label>
+			                  <label><input type="checkbox" style="margin-top: 0px;"> Any Two</label>
+			                </div>
+			              </div>
+			              <hr />
+			              
+			              <p class="activity-date">Schedule Pre-check</p>
+			              <div class="form-group">
+			              <div class="select-date">
+			              <div class="input-group date form_datetime" >
+			                  <input class="form-control calendar-tb" size="16" type="text" value="" readonly>
+			                  <span class="input-group-addon calendar-icon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+			              </div>
+			              <input type="hidden" id="dtp_input1" value="" />
+			              </div>
+			              </div>
+			              <p class="activity-date">All the Qualified devices will be send for Approval.</p>
+
+			            </div>
+			          </div>
+			        </div>
+
+			        <div class="modal-footer">
+			          <button type="button" class="btn btn-swim-cancel" data-dismiss="modal">Cancle</button>
+			          <button type="button" class="btn btn-swim">Send for Approval</button>
+			        </div>
+
+			      </div>
+			    </div>
+			  </div>
+
+			  <!-- Schedule Approval Popup End -->
+
+			</main>
+			<!-- jQuery 2.2.3 -->
+			<script src="bootstrap/js/jquery.min.js"></script>
+			<!-- Bootstrap 3.3.6 -->
+			<script src="bootstrap/js/bootstrap.min.js"></script>
+
+			<!-- Date Time Picker -->
+			<script src="bootstrap/datetimepicker/bootstrap-datetimepicker.js"></script>
+			<script type="text/javascript">
+			    $('.form_datetime').datetimepicker({
+			        //language:  'fr',
+			        weekStart: 1,
+			        todayBtn:  1,
+			    autoclose: 1,
+			    todayHighlight: 1,
+			    startView: 2,
+			    forceParse: 0,
+			        showMeridian: 1
+			    });
+			  $('.form_date').datetimepicker({
+			        language:  'fr',
+			        weekStart: 1,
+			        todayBtn:  1,
+			    autoclose: 1,
+			    todayHighlight: 1,
+			    startView: 2,
+			    minView: 2,
+			    forceParse: 0
+			    });
+			  $('.form_time').datetimepicker({
+			        language:  'fr',
+			        weekStart: 1,
+			        todayBtn:  1,
+			    autoclose: 1,
+			    todayHighlight: 1,
+			    startView: 1,
+			    minView: 0,
+			    maxView: 1,
+			    forceParse: 0
+			    });
+			</script>
+			<!-- Date Time Picker -->
+
+			<script type="text/javascript">
+			  $(document).ready(function () {
+			    $('.record_table tr').click(function (event) {
+			        if (event.target.type !== 'checkbox') {
+			            $(':checkbox', this).trigger('click');
+			        }
+			    });
+
+			    $("input[type='checkbox']").change(function (e) {
+			        if ($(this).is(":checked")) {
+			            $(this).closest('tr').addClass("highlight_row");
+			        } else {
+			            $(this).closest('tr').removeClass("highlight_row");
+			        }
+			    });
+			});
+			</script>
+
+			<!-- Multiple Select Drop Down -->
+			<script type="text/javascript" src="bootstrap/js/bootstrap-multiselect.js"></script>
+			<script type="text/javascript">
+			    $(document).ready(function() {
+			        $('.selectmultiple').multiselect({
+			            enableFiltering: true,
+			            includeSelectAllOption: true,
+			            selectAllJustVisible: false
+			        });
+			    });
+			</script>
+			<!-- Multiple Select Drop Down -->
+
+			</body>
+			</html>

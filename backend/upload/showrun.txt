@@ -1,0 +1,1136 @@
+!
+!
+no service pad
+service tcp-keepalives-in
+service tcp-keepalives-out
+service timestamps debug datetime msec localtime show-timezone
+service timestamps log datetime msec localtime show-timezone
+service password-encryption
+service sequence-numbers
+service unsupported-transceiver
+no platform punt-keepalive disable-kernel-core
+platform bfd-debug-trace 1
+platform xconnect load-balance-hash-algo mac-ip-instanceid
+platform tcam-parity-error enable
+platform tcam-threshold enable ucastv6 70
+platform tcam-threshold alarm-frequency 1
+!
+hostname RNAGRNAGESR011
+!
+boot-start-marker
+boot system bootflash:asr920-universalk9_npe.V156_2_SP_SR682897525_5.bin
+boot-end-marker
+!
+!
+vrf definition Mgmt-intf
+!
+address-family ipv4
+exit-address-family
+!
+address-family ipv6
+exit-address-family
+!
+vrf definition RJIL-BEARER-ENB
+description *** FOR BEARER LTE SERVICES ***
+rd 172.30.107.151:2
+route-target export 64730:116
+route-target export 64740:50262
+route-target import 64730:11601
+route-target import 64740:50262
+!
+address-family ipv6
+exit-address-family
+!
+vrf definition RJIL-IME
+description *** FOR IME SERVICES ***
+rd 172.30.107.151:6
+route-target export 64760:116
+route-target import 64760:11601
+!
+address-family ipv4
+exit-address-family
+!
+address-family ipv6
+exit-address-family
+!
+vrf definition RJIL-IP-MGMT
+description *** For Out-of-Band management ***
+rd 172.30.107.151:29
+!
+address-family ipv4
+route-target export 64820:116
+route-target export 64820:99
+route-target import 64820:11601
+route-target import 64820:99
+exit-address-family
+!
+address-family ipv6
+route-target export 64820:116
+route-target import 64820:11601
+exit-address-family
+!
+vrf definition RJIL-OAM-ENB
+description *** FOR O&M LTE SERVICES ***
+rd 172.30.107.151:3
+route-target export 64720:116
+route-target import 64720:11601
+!
+address-family ipv6
+exit-address-family
+!
+vrf definition RJIL-SIGNALING-ENB
+description *** FOR SIGNALLING LTE SERVICES ***
+rd 172.30.107.151:1
+route-target export 64710:116
+route-target import 64710:11601
+!
+address-family ipv6
+exit-address-family
+!
+vrf definition RJIL-WIFI-CISCO
+description *** FOR CISCO WIFI SERVICES ***
+rd 172.30.107.151:4
+route-target export 64750:116
+route-target import 64750:11601
+!
+address-family ipv4
+exit-address-family
+!
+address-family ipv6
+exit-address-family
+!
+logging buffered 65536 informational
+no logging console
+no logging monitor
+enable secret 5 $1$B92X$lAGrRv5uXYcejok4fZJ.A1
+!
+aaa new-model
+!
+!
+aaa group server tacacs+ ACSSERVER
+server name TACACS1
+server name TACACS2
+ip vrf forwarding RJIL-IP-MGMT
+ip tacacs source-interface Loopback999
+!
+aaa authentication banner ^CUnauthorized acces is prohibited^C
+aaa authentication login AAA-CONSOLE-LOCAL group ACSSERVER local
+aaa authentication login AAA-VTY-ACS group ACSSERVER local
+aaa authentication enable default group ACSSERVER enable
+aaa authorization console
+aaa authorization config-commands
+aaa authorization exec AAA-VTY-ACS group ACSSERVER local
+aaa authorization commands 1 AAA-VTY-ACS group ACSSERVER local
+aaa authorization commands 10 default none
+aaa authorization commands 15 AAA-VTY-ACS group ACSSERVER local
+aaa accounting update newinfo
+aaa accounting exec default start-stop group ACSSERVER
+aaa accounting commands 1 default start-stop group ACSSERVER
+aaa accounting commands 15 default start-stop group ACSSERVER
+aaa accounting connection default start-stop group ACSSERVER
+aaa accounting system default start-stop group ACSSERVER
+!
+!
+!
+!
+!
+aaa session-id common
+aaa password restriction
+process cpu threshold type total rising 80 interval 30
+process cpu statistics limit entry-percentage 80 size 86400
+clock timezone IST 5 30
+facility-alarm critical exceed-action shutdown
+no ip source-route
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip bootp server
+no ip domain lookup
+ip domain name INFRA.JIO.COM
+ip multicast route-limit 8000
+ip dhcp bootp ignore
+!
+!
+!
+login block-for 30 attempts 5 within 30
+login delay 2
+login quiet-mode access-class MGMT-VTY-IPv6
+login on-failure log
+login on-success log
+ipv6 icmp error-interval 50 20
+no ipv6 source-route
+ipv6 nd cache interface-limit 50 log 1
+ipv6 unicast-routing
+ipv6 multicast-routing
+!
+!
+!
+!
+!
+!
+!
+mpls label protocol ldp
+mpls ldp password option 10 for MPLS-LDP-IPv4 7 08131869363501272D3B5F57386576076261
+mpls ldp graceful-restart
+mpls ldp session protection
+mpls ldp igp sync holddown 2000
+mpls ldp discovery targeted-hello accept
+!
+!
+multilink bundle-name authenticated
+!
+key chain ISIS-KEY
+key 1
+key-string 7 097E1A2E262C043B18333479783666611A7347
+accept-lifetime 01:00:00 Jan 1 2014 infinite
+send-lifetime 01:00:00 Jan 1 2014 infinite
+!
+crypto pki trustpoint TP-self-signed-2272435040
+enrollment selfsigned
+subject-name cn=IOS-Self-Signed-Certificate-2272435040
+revocation-check none
+rsakeypair TP-self-signed-2272435040
+!
+!
+crypto pki certificate chain TP-self-signed-2272435040
+certificate self-signed 01
+3082022B 30820194 A0030201 02020101 300D0609 2A864886 F70D0101 05050030
+31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274
+69666963 6174652D 32323732 34333530 3430301E 170D3138 30363136 30363430
+32355A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649
+4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D32 32373234
+33353034 3030819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281
+81008CF7 CB1C9969 463264DC BB68D188 1E404FC0 162B6CCD 7F6FA391 557B2D9D
+7C38FFB7 2E549B93 E60CEF36 1718FC37 BF114B69 D9DD8E42 36F533F9 5D0D7BC1
+D78E7927 03A60A62 15FEE341 7032795B 1DB1C3A3 18D8325A DB1AB550 7C8957AC
+1DD480F7 CD79F07C E5A87B5D DDBF3B92 3C052C27 0788D6C9 51A9DDB3 56EDAA39
+C7670203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF 301F0603
+551D2304 18301680 14F050A3 433648FD 9BB589E4 10D55DF9 A747EB91 04301D06
+03551D0E 04160414 F050A343 3648FD9B B589E410 D55DF9A7 47EB9104 300D0609
+2A864886 F70D0101 05050003 8181001D D9934F23 25BDFC5F E8C9E1A3 29A4C906
+9A8B3E67 8FF296F1 4D5A13AD 81B31FA4 D7BCE30A 159B00B1 523F8E4B 8D1BE069
+A34D9AB1 1652E1EB DCF991C8 94FE87E1 7EDC88C1 C414DFA2 99E12684 0097DD33
+FE0EC67A DB57F0CB 233377B9 A855541F D1823573 DEB2FB98 84DAAF87 6A692403
+492F216D 029396F8 F5F89070 801C29
+quit
+license feature ptp
+license udi pid ASR-920-10SZ-PD sn CAT2214U198
+license accept end user agreement
+license boot level advancedmetroipaccess
+archive
+log config
+logging enable
+logging size 200
+notify syslog contenttype plaintext
+hidekeys
+memory reserve critical 2000
+memory free low-watermark processor 5000
+!
+sdm prefer default
+mac-address-table limit bdomain 101 maximum 20
+mac-address-table limit bdomain 102 maximum 20
+mac-address-table limit bdomain 103 maximum 20
+mac-address-table limit bdomain 104 maximum 20
+mac-address-table limit bdomain 350 maximum 20
+mac-address-table limit bdomain 351 maximum 20
+mac-address-table limit bdomain 352 maximum 20
+mac-address-table limit bdomain 353 maximum 20
+mac-address-table limit bdomain 354 maximum 20
+mac-address-table limit bdomain 355 maximum 20
+mac-address-table limit bdomain 550 maximum 20
+mac-address-table limit bdomain 551 maximum 20
+mac-address-table limit bdomain 552 maximum 20
+mac-address-table limit bdomain 553 maximum 20
+mac-address-table limit bdomain 901 maximum 20
+mac-address-table limit bdomain 951 maximum 20
+!
+username rjil privilege 15 secret 5 $1$MKAy$tVA7RZYh3MepXlm3BSJVH.
+!
+redundancy
+bfd-template single-hop FIBRE
+interval microseconds min-tx 50000 min-rx 50000 multiplier 3
+!
+bridge-domain 246
+!
+!
+!
+!
+!
+transceiver type all
+monitoring
+!
+!
+!
+class-map match-any QOS-SIGNALING-QGRP
+match qos-group 7
+class-map match-any QOS-OAM-DSCP
+match dscp cs2
+class-map match-any QOS-CONTROL-DSCP
+match dscp cs6
+class-map match-any QOS-VOICE-QGRP
+match qos-group 5
+class-map match-any QOS-SIGNALING-DSCP
+match dscp cs5
+class-map match-any QOS-HOSTED-AV-SMARTSCHEDULER-EXP
+match mpls experimental topmost 3
+class-map match-any QOS-OAM-QGRP
+match qos-group 2
+class-map match-any QOS-IPTV-EXP
+match mpls experimental topmost 4
+class-map match-any QOS-CONTROL-QGRP
+match qos-group 6
+class-map match-any QOS-VOICE-DSCP
+match dscp ef  cs7
+class-map match-any QOS-INT-PREMIUM-EXP
+match mpls experimental topmost 1
+class-map match-any QOS-HOSTED-AV-SMARTSCHEDULER-QGRP
+match qos-group 3
+class-map match-any QOS-IPTV-QGRP
+match qos-group 4
+class-map match-any QOS-OAM-EXP
+match mpls experimental topmost 2
+class-map match-any QOS-CONTROL-EXP
+match mpls experimental topmost 6
+match ip precedence 6
+class-map match-any QOS-HOSTED-AV-SMARTSCHEDULER-DSCP
+match dscp af32
+class-map match-any QOS-IPTV-DSCP
+match dscp af31  af41
+class-map match-all QOS-VOICE-EXP
+match mpls experimental topmost 5
+class-map match-any QOS-SIGNALING-EXP
+match mpls experimental topmost 7
+class-map match-any QOS-INT-PREMIUM-DSCP
+match dscp af22
+class-map match-any QOS-INT-PREMIUM-QGRP
+match qos-group 1
+!
+policy-map RJIL-QOS-NTWK-NNI-OUT-MW-500-CHILD
+class QOS-VOICE-QGRP
+priority level 1
+police cir percent 25
+set mpls experimental topmost 5
+queue-limit 250000 bytes
+class QOS-SIGNALING-QGRP
+priority level 2
+police cir percent 5
+set mpls experimental topmost 7
+queue-limit 250000 bytes
+class QOS-CONTROL-QGRP
+bandwidth percent 1
+set mpls experimental topmost 6
+queue-limit 500000 bytes
+class QOS-IPTV-QGRP
+bandwidth percent 20
+set mpls experimental topmost 4
+queue-limit 250000 bytes
+class QOS-HOSTED-AV-SMARTSCHEDULER-QGRP
+bandwidth percent 10
+set mpls experimental topmost 3
+queue-limit 500000 bytes
+class QOS-OAM-QGRP
+bandwidth percent 5
+set mpls experimental topmost 2
+queue-limit 500000 bytes
+class QOS-INT-PREMIUM-QGRP
+bandwidth percent 16
+set mpls experimental topmost 1
+queue-limit 500000 bytes
+class class-default
+bandwidth percent 18
+set mpls experimental topmost 0
+queue-limit 500000 bytes
+policy-map RJIL-QOS-NTWK-NNI-OUT-MW-500
+class class-default
+shape average 500000000
+service-policy RJIL-QOS-NTWK-NNI-OUT-MW-500-CHILD
+policy-map RJIL-QOS-NTWK-NNI-OUT-MW-250-CHILD
+class QOS-VOICE-QGRP
+priority level 1
+police cir percent 25
+set mpls experimental topmost 5
+queue-limit 125000 bytes
+class QOS-SIGNALING-QGRP
+priority level 2
+police cir percent 5
+set mpls experimental topmost 7
+queue-limit 125000 bytes
+class QOS-CONTROL-QGRP
+bandwidth percent 1
+set mpls experimental topmost 6
+queue-limit 250000 bytes
+class QOS-IPTV-QGRP
+bandwidth percent 20
+set mpls experimental topmost 4
+queue-limit 125000 bytes
+class QOS-HOSTED-AV-SMARTSCHEDULER-QGRP
+bandwidth percent 10
+set mpls experimental topmost 3
+queue-limit 250000 bytes
+class QOS-OAM-QGRP
+bandwidth percent 5
+set mpls experimental topmost 2
+queue-limit 250000 bytes
+class QOS-INT-PREMIUM-QGRP
+bandwidth percent 16
+set mpls experimental topmost 1
+queue-limit 500000 bytes
+class class-default
+bandwidth percent 18
+set mpls experimental topmost 0
+queue-limit 500000 bytes
+policy-map RJIL-QOS-WAP-UNI-OUT-PARENT
+class QOS-VOICE-QGRP
+priority level 1
+police cir percent 25
+class QOS-SIGNALING-QGRP
+priority level 2
+police cir percent 5
+class QOS-CONTROL-QGRP
+bandwidth percent 1
+class QOS-IPTV-QGRP
+bandwidth percent 20
+class QOS-HOSTED-AV-SMARTSCHEDULER-QGRP
+bandwidth percent 10
+class QOS-OAM-QGRP
+bandwidth percent 5
+class QOS-INT-PREMIUM-QGRP
+bandwidth percent 16
+class class-default
+bandwidth percent 18
+policy-map RJIL-QOS-NTWK-NNI-OUT-MW-250
+class class-default
+shape average 250000000
+service-policy RJIL-QOS-NTWK-NNI-OUT-MW-250-CHILD
+policy-map RJIL-QOS-NTWK-NNI-OUT-PARENT
+class QOS-VOICE-QGRP
+priority level 1
+police cir percent 25
+set mpls experimental topmost 5
+class QOS-SIGNALING-QGRP
+priority level 2
+police cir percent 5
+set mpls experimental topmost 7
+class QOS-CONTROL-QGRP
+bandwidth percent 1
+set mpls experimental topmost 6
+class QOS-IPTV-QGRP
+bandwidth percent 20
+set mpls experimental topmost 4
+class QOS-HOSTED-AV-SMARTSCHEDULER-QGRP
+bandwidth percent 10
+set mpls experimental topmost 3
+class QOS-OAM-QGRP
+bandwidth percent 5
+set mpls experimental topmost 2
+class QOS-INT-PREMIUM-QGRP
+bandwidth percent 16
+set mpls experimental topmost 1
+class class-default
+bandwidth percent 18
+set mpls experimental topmost 0
+policy-map RJIL-QOS-IME-UNI-IN-PARENT
+class class-default
+set qos-group 2
+police 1000000
+policy-map RJIL-QOS-ENB-UNI-OUT-PARENT
+class QOS-VOICE-QGRP
+priority level 1
+police cir percent 25
+class QOS-SIGNALING-QGRP
+priority level 2
+police cir percent 5
+class QOS-CONTROL-QGRP
+bandwidth percent 1
+class QOS-IPTV-QGRP
+bandwidth percent 20
+class QOS-HOSTED-AV-SMARTSCHEDULER-QGRP
+bandwidth percent 10
+class QOS-OAM-QGRP
+bandwidth percent 5
+class QOS-INT-PREMIUM-QGRP
+bandwidth percent 16
+class class-default
+bandwidth percent 18
+policy-map RJIL-QOS-WAP-UNI-IN-CHILD
+class QOS-VOICE-DSCP
+set qos-group 5
+class QOS-CONTROL-DSCP
+set qos-group 6
+class QOS-IPTV-DSCP
+set qos-group 4
+class QOS-HOSTED-AV-SMARTSCHEDULER-DSCP
+set qos-group 3
+class QOS-OAM-DSCP
+set qos-group 2
+class QOS-INT-PREMIUM-DSCP
+set qos-group 1
+class QOS-SIGNALING-DSCP
+set qos-group 7
+class class-default
+policy-map RJIL-QOS-ENB-UNI-IN-CHILD
+class QOS-VOICE-DSCP
+set qos-group 5
+class QOS-CONTROL-DSCP
+set qos-group 6
+class QOS-IPTV-DSCP
+set qos-group 4
+class QOS-HOSTED-AV-SMARTSCHEDULER-DSCP
+set qos-group 3
+class QOS-OAM-DSCP
+set qos-group 2
+class QOS-INT-PREMIUM-DSCP
+set qos-group 1
+class QOS-SIGNALING-DSCP
+set qos-group 7
+class class-default
+policy-map RJIL-QOS-ENB-UNI-IN-PARENT
+class class-default
+police 100000000
+service-policy RJIL-QOS-ENB-UNI-IN-CHILD
+policy-map RJIL-QOS-WAP-UNI-IN-PARENT
+class class-default
+police 100000000
+service-policy RJIL-QOS-WAP-UNI-IN-CHILD
+policy-map RJIL-QOS-NTWK-NNI-IN-PARENT
+class QOS-VOICE-EXP
+set qos-group 5
+class QOS-SIGNALING-EXP
+set qos-group 7
+class QOS-CONTROL-EXP
+set qos-group 6
+class QOS-IPTV-EXP
+set qos-group 4
+class QOS-HOSTED-AV-SMARTSCHEDULER-EXP
+set qos-group 3
+class QOS-OAM-EXP
+set qos-group 2
+class QOS-INT-PREMIUM-EXP
+set qos-group 1
+class class-default
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+description ## RNAGRNAGESR011-CORE-MGMT-LPBK ##
+ip address 172.30.107.151 255.255.255.255
+no ip redirects
+no ip unreachables
+no ip proxy-arp
+ipv6 address 2405:200:201:3D01:172:30:107:151/128
+isis tag 10
+!
+interface Loopback999
+description *** Loopback interface for management ***
+vrf forwarding RJIL-IP-MGMT
+ip address 172.30.107.151 255.255.255.255
+no ip redirects
+no ip unreachables
+no ip proxy-arp
+ipv6 address 2405:200:204:13D:172:30:107:151/128
+no ipv6 redirects
+no ipv6 unreachables
+!
+interface GigabitEthernet0/0/0
+no ip address
+media-type rj45
+negotiation auto
+!
+interface GigabitEthernet0/0/1
+no ip address
+media-type rj45
+negotiation auto
+!
+interface GigabitEthernet0/0/2
+no ip address
+negotiation auto
+!
+interface GigabitEthernet0/0/3
+no ip address
+negotiation auto
+!
+interface GigabitEthernet0/0/4
+no ip address
+negotiation auto
+!
+interface GigabitEthernet0/0/5
+description # To eNode-B #
+dampening
+mtu 9216
+no ip address
+load-interval 30
+media-type sfp
+negotiation auto
+service-policy input RJIL-QOS-ENB-UNI-IN-PARENT
+service-policy output RJIL-QOS-ENB-UNI-OUT-PARENT
+service instance 101 ethernet
+description # To eNode-B - R4G_Bearer #
+encapsulation dot1q 101
+rewrite ingress tag pop 1 symmetric
+bridge-domain 101
+!
+service instance 102 ethernet
+description # To eNode-B - R4G_Signalling #
+encapsulation dot1q 102
+rewrite ingress tag pop 1 symmetric
+bridge-domain 102
+!
+service instance 103 ethernet
+description # To eNode-B - R4G_R4G_o&m #
+encapsulation dot1q 103
+rewrite ingress tag pop 1 symmetric
+bridge-domain 103
+!
+service instance 104 ethernet
+description # Multicast #
+encapsulation dot1q 104
+rewrite ingress tag pop 1 symmetric
+bridge-domain 104
+!
+!
+interface GigabitEthernet0/0/6
+description # TO-RNAGRNAGESR005-GigabitEthernet0/0/4-MW # #2387158 ##
+dampening
+mtu 9216
+no ip address
+load-interval 30
+carrier-delay up 2
+carrier-delay down msec 0
+media-type sfp
+negotiation auto
+synchronous mode
+service-policy input RJIL-QOS-NTWK-NNI-IN-PARENT
+service-policy output RJIL-QOS-NTWK-NNI-OUT-MW-250
+service instance 352 ethernet
+description # Data Traffic #
+encapsulation untagged
+l2protocol peer cdp
+bridge-domain 352
+!
+!
+interface GigabitEthernet0/0/7
+no ip address
+negotiation auto
+!
+interface GigabitEthernet0/0/8
+no ip address
+negotiation auto
+!
+interface GigabitEthernet0/0/9
+no ip address
+negotiation auto
+!
+interface TenGigabitEthernet0/0/10
+no ip address
+!
+interface TenGigabitEthernet0/0/11
+no ip address
+!
+interface GigabitEthernet0
+vrf forwarding Mgmt-intf
+negotiation auto
+!
+interface BDI101
+description # To eNode-B - R4G_Bearer #
+vrf forwarding RJIL-BEARER-ENB
+no ip address
+no ip redirects
+no ip unreachables
+no ip proxy-arp
+ip mtu 9216
+load-interval 30
+ipv6 address 2405:200:13D:1000:3:2:101:2E9/126
+ipv6 enable
+ipv6 mtu 9216
+no ipv6 redirects
+no ipv6 unreachables
+ipv6 traffic-filter INFRA-iACL-IPv6-LTE in
+!
+interface BDI102
+description # To eNode-B - R4G_Signalling #
+vrf forwarding RJIL-SIGNALING-ENB
+no ip address
+no ip redirects
+no ip unreachables
+no ip proxy-arp
+ip mtu 9216
+load-interval 30
+ipv6 address 2405:200:13D:1000:3:2:102:2E9/126
+ipv6 enable
+ipv6 mtu 9216
+no ipv6 redirects
+no ipv6 unreachables
+ipv6 traffic-filter INFRA-iACL-IPv6-LTE in
+!
+interface BDI103
+description # To eNode-B - R4G_R4G_o&m #
+vrf forwarding RJIL-OAM-ENB
+no ip address
+no ip redirects
+no ip unreachables
+no ip proxy-arp
+ip mtu 9216
+load-interval 30
+ipv6 address 2405:200:13D:1000:3:2:103:2E9/126
+ipv6 enable
+ipv6 mtu 9216
+ipv6 nd managed-config-flag
+no ipv6 redirects
+no ipv6 unreachables
+ipv6 dhcp relay destination 2405:200:80B:732::4
+ipv6 traffic-filter INFRA-iACL-IPv6-LTE in
+!
+interface BDI104
+description # Multicast #
+no ip address
+no ip redirects
+no ip unreachables
+no ip proxy-arp
+ip mtu 9216
+load-interval 30
+ipv6 enable
+ipv6 mtu 9216
+no ipv6 redirects
+no ipv6 unreachables
+ipv6 mld query-timeout 180
+ipv6 mld query-interval 60
+ipv6 mld access-group MCAST-BDR-IPv6
+ipv6 pim hello-interval 10
+!
+interface BDI352
+description # TO-RNAGRNAGESR005-GigabitEthernet0/0/4-MW #
+ip address 10.65.253.189 255.255.255.254
+ip helper-address 10.70.56.21
+no ip redirects
+no ip unreachables
+no ip proxy-arp
+ip mtu 9216
+ip router isis RAN
+load-interval 30
+ipv6 address 2405:200:13D:0:10:65:253:189/127
+ipv6 address 2405:200:13D:0:173:65:253:189/127
+ipv6 enable
+ipv6 mtu 9216
+no ipv6 redirects
+no ipv6 unreachables
+ipv6 router isis RAN
+mpls ip
+mpls mtu 9216
+mpls ldp igp sync delay 25
+isis circuit-type level-2-only
+isis network point-to-point
+isis tag 20
+!
+router isis RAN
+net 49.0003.1720.3010.7151.00
+is-type level-2-only
+router-id Loopback0
+authentication mode md5 level-2
+authentication key-chain ISIS-KEY level-2
+metric-style wide
+fast-flood 10
+ip route priority high tag 5000
+set-overload-bit on-startup 360
+max-lsp-lifetime 65535
+lsp-refresh-interval 65000
+spf-interval 5 50 200
+prc-interval 5 50 200
+lsp-gen-interval 5 50 200
+no hello padding
+log-adjacency-changes
+fast-reroute per-prefix level-2 all
+fast-reroute remote-lfa level-2 mpls-ldp
+microloop avoidance disable
+passive-interface Loopback0
+!
+address-family ipv6
+spf-interval 5 50 200
+prc-interval 5 50 200
+exit-address-family
+mpls ldp sync
+!
+router bgp 55836
+bgp router-id 172.30.107.151
+bgp log-neighbor-changes
+bgp graceful-restart
+no bgp default ipv4-unicast
+neighbor RJIL-AG1-IBGP-GRP peer-group
+neighbor RJIL-AG1-IBGP-GRP remote-as 55836
+neighbor RJIL-AG1-IBGP-GRP password 7 04695F2130034B7E0026354441194256057A70
+neighbor RJIL-AG1-IBGP-GRP update-source Loopback0
+neighbor RJIL-AG1-IBGP-GRP-IPv6 peer-group
+neighbor RJIL-AG1-IBGP-GRP-IPv6 remote-as 55836
+neighbor RJIL-AG1-IBGP-GRP-IPv6 password 7 012152236429013F28737E5A4A175940245D50
+neighbor RJIL-AG1-IBGP-GRP-IPv6 update-source Loopback0
+neighbor 2405:200:201:3D01:172:23:20:236 peer-group RJIL-AG1-IBGP-GRP-IPv6
+neighbor 2405:200:201:3D01:172:23:30:103 peer-group RJIL-AG1-IBGP-GRP-IPv6
+neighbor 172.23.20.236 peer-group RJIL-AG1-IBGP-GRP
+neighbor 172.23.30.103 peer-group RJIL-AG1-IBGP-GRP
+!
+address-family ipv4
+bgp nexthop trigger delay 0
+neighbor RJIL-AG1-IBGP-GRP send-community
+neighbor RJIL-AG1-IBGP-GRP route-map RJIL-DROP-ALL out
+neighbor 172.23.20.236 activate
+neighbor 172.23.30.103 activate
+exit-address-family
+!
+address-family vpnv4
+bgp additional-paths select backup
+bgp additional-paths install
+bgp nexthop trigger delay 1
+neighbor RJIL-AG1-IBGP-GRP send-community extended
+neighbor 172.23.20.236 activate
+neighbor 172.23.30.103 activate
+exit-address-family
+!
+address-family ipv6
+bgp nexthop trigger delay 1
+network 2405:200:201:3D01:172:30:107:151/128 route-map CSR-COMM
+neighbor RJIL-AG1-IBGP-GRP send-community
+neighbor RJIL-AG1-IBGP-GRP send-label
+neighbor 172.23.20.236 activate
+neighbor 172.23.30.103 activate
+exit-address-family
+!
+address-family ipv6 multicast
+neighbor RJIL-AG1-IBGP-GRP-IPv6 route-map RJIL-DROP-ALL out
+neighbor 2405:200:201:3D01:172:23:20:236 activate
+neighbor 2405:200:201:3D01:172:23:30:103 activate
+exit-address-family
+!
+address-family vpnv6
+bgp recursion host
+bgp nexthop trigger delay 1
+neighbor RJIL-AG1-IBGP-GRP send-community extended
+neighbor 172.23.20.236 activate
+neighbor 172.23.30.103 activate
+exit-address-family
+!
+address-family ipv6 vrf RJIL-BEARER-ENB
+redistribute connected
+import path selection all
+import path limit 4
+exit-address-family
+!
+address-family ipv4 vrf RJIL-IME
+import path selection all
+import path limit 4
+redistribute connected
+exit-address-family
+!
+address-family ipv6 vrf RJIL-IME
+redistribute connected
+import path selection all
+import path limit 4
+exit-address-family
+!
+address-family ipv4 vrf RJIL-IP-MGMT
+redistribute connected
+exit-address-family
+!
+address-family ipv6 vrf RJIL-IP-MGMT
+redistribute connected
+exit-address-family
+!
+address-family ipv6 vrf RJIL-OAM-ENB
+redistribute connected
+import path selection all
+import path limit 4
+exit-address-family
+!
+address-family ipv6 vrf RJIL-SIGNALING-ENB
+redistribute connected
+import path selection all
+import path limit 4
+exit-address-family
+!
+address-family ipv4 vrf RJIL-WIFI-CISCO
+import path selection all
+import path limit 4
+redistribute connected
+exit-address-family
+!
+address-family ipv6 vrf RJIL-WIFI-CISCO
+redistribute connected
+import path selection all
+import path limit 4
+exit-address-family
+!
+ip forward-protocol nd
+!
+ip bgp-community new-format
+ip ftp source-interface Loopback999
+no ip http server
+ip http authentication local
+ip http secure-server
+ip http timeout-policy idle 600 life 14400 requests 25
+ip ssh time-out 60
+ip ssh source-interface Loopback999
+ip ssh dscp 18
+ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+!
+ip access-list standard MGMT-SNMP-IPv4
+deny   any
+ip access-list standard MGMT-VTY-IPv4
+deny   any
+ip access-list standard MPLS-LDP-IPv4
+permit 172.16.0.0 0.15.255.255
+ip access-list standard NTP-ACL
+permit 172.16.97.203
+permit 172.16.97.232
+!
+ip access-list extended INFRA-iACL-IPv4-WiFi
+remark Phase 1 a Anti-spoofing,Fragmentation,Attack Denies
+remark Deny Fragments
+deny   tcp any 49.44.0.0 0.0.7.255 fragments
+deny   udp any 49.44.0.0 0.0.7.255 fragments
+deny   icmp any 49.44.0.0 0.0.7.255 fragments
+deny   tcp any any eq 5900
+remark Deny access to RJIL Infrastructure devices
+deny   ip any 49.44.0.0 0.0.7.255
+remark Deny special-use address sources.
+remark See RFC 3330 for additional special-use addresses.
+deny   ip host 0.0.0.0 any
+deny   ip any 0.0.0.0 0.255.255.255
+deny   ip 0.0.0.0 0.255.255.255 any
+deny   ip host 255.255.255.255 any
+deny   ip 127.0.0.0 0.255.255.255 any
+deny   ip any 127.0.0.0 0.255.255.255
+deny   ip 169.254.0.0 0.0.255.255 any
+deny   ip 192.0.2.0 0.0.0.255 any
+deny   ip any 192.0.2.0 0.0.0.255
+deny   ip 192.18.0.0 0.1.255.255 any
+deny   ip any 192.18.0.0 0.1.255.255
+deny   ip 192.0.0.0 0.0.0.255 any
+deny   ip any 192.0.0.0 0.0.0.255
+deny   ip 224.0.0.0 31.255.255.255 any
+remark Deny RFC1918 space from entering AS
+permit ip any 10.73.1.0 0.0.0.63
+permit ip any 10.70.120.64 0.0.0.15
+permit ip any host 172.16.92.209
+permit ip any host 172.16.92.213
+permit ip any 10.70.120.80 0.0.0.15
+permit ip any 10.70.120.0 0.0.0.15
+deny   ip 192.168.0.0 0.0.255.255 any
+deny   ip any 10.0.0.0 0.255.255.255
+deny   ip any 172.16.0.0 0.15.255.255
+deny   ip any 192.168.0.0 0.0.255.255
+remark See RFC5737
+deny   ip 198.51.100.0 0.0.0.255 any
+deny   ip any 198.51.100.0 0.0.0.255
+deny   ip 203.0.113.0 0.0.0.255 any
+deny   ip any 203.0.113.0 0.0.0.255
+remark Deny RIL infrastructure space as a source of external packets
+deny   ip 49.44.0.0 0.0.7.255 any
+remark Phase 2 a Explicit Permit
+permit ip any any
+!
+ip sla responder twamp
+timeout 2000
+ip sla responder
+ip sla server twamp
+timer inactivity 1200
+logging source-interface Loopback999 vrf RJIL-IP-MGMT
+logging host ipv6 2405:200:818:651::30 vrf RJIL-IP-MGMT
+logging host ipv6 2405:200:A10:FCD8:10:136:104:35 vrf RJIL-IP-MGMT
+!
+route-map RJIL-DROP-ALL deny 10
+!
+route-map CSR-COMM permit 10
+set community 64600:116
+!
+snmp-server community OnM4G@Ge0 RO ipv6 MGMT-SNMP-IPv6 MGMT-SNMP-IPv4
+snmp-server trap-source Loopback999
+snmp-server source-interface informs Loopback999
+snmp-server queue-length 1000
+snmp-server enable traps snmp authentication linkdown linkup coldstart warmstart
+snmp-server enable traps tty
+snmp-server enable traps config-copy
+snmp-server enable traps config
+snmp-server enable traps config-ctid
+snmp-server enable traps isis
+snmp-server enable traps ipsla
+snmp-server enable traps memory bufferpeak
+snmp-server enable traps fru-ctrl
+snmp-server enable traps entity
+snmp-server enable traps cpu threshold
+snmp-server enable traps vlancreate
+snmp-server enable traps vlandelete
+snmp-server enable traps cef resource-failure peer-state-change peer-fib-state-change inconsistency
+snmp-server enable traps netsync
+snmp-server enable traps aaa_server
+snmp-server enable traps mpls rfc ldp
+snmp-server enable traps mpls ldp
+snmp-server enable traps alarms informational
+snmp-server enable traps bulkstat collection transfer
+snmp-server enable traps vrfmib vrf-up vrf-down vnet-trunk-up vnet-trunk-down
+snmp-server enable traps transceiver all
+snmp-server enable traps mpls vpn
+snmp-server enable traps mpls rfc vpn
+snmp ifmib ifalias long
+snmp ifmib ifindex persist
+mpls ldp router-id Loopback0
+!
+tacacs server TACACS1
+address ipv4 10.70.11.197
+key 7 0469010F0001191B514A53
+tacacs server TACACS2
+address ipv4 10.70.16.148
+key 7 13371D1B042C517F73777E
+!
+!
+!
+ipv6 access-list INFRA-iACL-IPv6-LTE
+deny ipv6 any 2405:200::/40 fragments
+permit ipv6 2405:200::/40 any
+permit ipv6 any 2405:200::/40
+deny ipv6 2002:E000::/20 any
+deny ipv6 2002:7F00::/24 any
+deny ipv6 2002::/24 any
+deny ipv6 2002:FF00::/24 any
+deny ipv6 2002:A00::/24 any
+deny ipv6 2002:AC10::/28 any
+deny ipv6 2002:C0A8::/32 any
+deny ipv6 host :: any
+deny ipv6 host ::1 any
+deny ipv6 ::/96 any
+deny ipv6 ::FFFF:0.0.0.0/96 any
+deny ipv6 ::/104 any
+deny ipv6 3FFE::/16 any
+remark Phase 1 a anti-spoofing and Fragmentation Denies
+remark Deny Fragments
+remark Permit RJIL ILL Customer
+remark Deny access to RJIL Infrastructure devices
+deny ipv6 any 2405:200:200::/40
+remark Deny RIL infrastructure space as a source of external packets
+deny ipv6 2405:200:200::/40 any
+remark Deny special-use address sources Refer RFC6890
+deny ipv6 ::/8 any
+deny ipv6 FEC0::/10 any
+deny ipv6 FC00::/7 any
+deny ipv6 FF00::/8 any
+deny ipv6 any 2001:10::/28
+deny ipv6 2001:10::/28 any
+deny ipv6 any 2001:DB8::/32
+deny ipv6 2001:DB8::/32 any
+permit ipv6 any 2001:2::/48
+permit ipv6 any 2001::/32
+deny ipv6 any 2001::/23
+deny ipv6 2001::/23 any
+remark deny false 6to4 packets
+remark deny loopback address
+deny ipv6 host 1:: any
+remark deny ipv4-compatible addresses
+remark ipv4 mapped adresses - obsoleted
+remark deny other compatible addresses
+deny ipv6 ::224.0.0.0/100 any
+deny ipv6 ::127.0.0.0/104 any
+deny ipv6 ::255.0.0.0/104 any
+remark deny 6bone addresses - depreciated
+remark Phase 2 a explicit Permit
+permit ipv6 any any
+!
+ipv6 access-list MGMT-SNMP-IPv6
+permit ipv6 2405:200:A10:FC00::/64 any
+permit ipv6 2405:200:A10:FC04::/64 any
+permit ipv6 2405:200:A10:FC09::/64 any
+permit ipv6 2405:200:A10:FCB0::/64 any
+permit ipv6 2405:200:A10:FCB1::/64 any
+permit ipv6 2405:200:100::/40 any
+permit ipv6 2405:200:A10:FC80::/64 any
+permit ipv6 2405:200:A10:FCC0::/64 any
+!
+control-plane
+!
+privilege exec all level 10 show
+banner login ^C
+-------------------------------------------------------------------------
+UNAUTHORIZED ACCESS TO THIS DEVICE IS PROHIBITED
+You must have explicit, authorized permission to access or configure this
+device.
+Unauthorized attempts and actions to access or use this system may result
+in civil and/or criminal penalties.
+All activities performed on this device are logged and monitored.
+GCTv20.8
+NE-ID INMPRNAGXXXXTW0002ENBESR001
+SAP-ID I-MP-RNAG-ENB-9004
+FAC-ID INMPRNAGXXXXTW0002
+HostName RNAGRNAGESR011
+-------------------------------------------------------------------------
+^C
+banner motd ^C
+-------------------------------------------------------------------------
+UNAUTHORIZED ACCESS TO THIS DEVICE IS PROHIBITED
+You must have explicit, authorized permission to access or configure this
+device.
+Unauthorized attempts and actions to access or use this system may result
+in civil and/or criminal penalties.
+All activities performed on this device are logged and monitored.
+GCTv20.8
+NE-ID INMPRNAGXXXXTW0002ENBESR001
+SAP-ID I-MP-RNAG-ENB-9004
+FAC-ID INMPRNAGXXXXTW0002
+HostName RNAGRNAGESR011
+-------------------------------------------------------------------------
+^C
+!
+line con 0
+exec-timeout 5 0
+privilege level 15
+logging synchronous
+transport output none
+stopbits 1
+line aux 0
+exec-timeout 0 1
+no exec
+transport output none
+stopbits 1
+line vty 0 4
+exec-timeout 5 0
+privilege level 15
+logging synchronous
+transport preferred none
+transport input ssh
+transport output ssh
+line vty 5 9
+exec-timeout 5 0
+privilege level 15
+logging synchronous
+transport preferred none
+transport input ssh
+transport output ssh
+line vty 10 20
+no exec
+!
+exception crashinfo file bootflash:crashinfo1
+exception crashinfo buffersize 256
+ztp disable
+esmc process
+ntp authentication-key 1 md5 01210C0D542B281B31 7
+ntp authenticate
+ntp trusted-key 1
+ntp source Loopback999
+ntp access-group peer NTP-ACL
+ntp master 5
+ntp server vrf RJIL-IP-MGMT 172.16.97.232 key 1 prefer
+ntp server vrf RJIL-IP-MGMT 172.16.97.203 key 1
+!
+!
+end
